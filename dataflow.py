@@ -5,9 +5,9 @@ from datetime import datetime, timedelta, timezone
 import numpy as np
 
 from bytewax.dataflow import Dataflow
-from bytewax.execution import run_main
-from bytewax.window import EventClockConfig, TumblingWindowConfig
 from bytewax.inputs import ManualInputConfig, distribute
+from bytewax.window import EventClockConfig, TumblingWindowConfig
+from bytewax.execution import run_main
 from bytewax.outputs import StdOutputConfig
 
 
