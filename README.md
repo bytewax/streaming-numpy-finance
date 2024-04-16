@@ -167,7 +167,11 @@ class YahooSource(FixedPartitionedSource):
 
 **Constructing the Dataflow**
 
-Alright, almost there! We just need now to construct the dataflow. We'll start with creating a Dataflow object named 'yahoofinance'. Once this is initialized, we can incorporate an input data source into the data flow. We can do this by using the bytewax module operator imported as op. We will use op.input, specify its input id as 'input', pass the 'yahoofinance' dataflow along with the data source - in this case the source of data is the YahooSource class we defined earlier initialized with 'ticker_list'.
+Alright, almost there! We just need now to construct the dataflow. 
+
+We'll start with creating a Dataflow object named 'yahoofinance'. Once this is initialized, we can incorporate an input data source into the data flow. 
+
+We can do this by using the bytewax module operator imported as op. We will use op.input, specify its input id as 'input', pass the 'yahoofinance' dataflow along with the data source - in this case the source of data is the YahooSource class we defined earlier initialized with 'ticker_list'.
 
 The resulting initialization and data structure output looks as follows:
 
@@ -240,7 +244,9 @@ window_config = TumblingWindow(length=timedelta(seconds=60), align_to=align_to)
 window = win.fold_window("1_min", inp, clock_config, window_config, build_array, acc_values)
 ```
 
-We have quite a bit going on here, so let's unpack this. First, we have two functions: a builder function (build_array) used to build data, and an updater function (acc_values) used to accumulate data. These are the last two arguments in the fold_window operator. Next, we have an get_event_time function that will take the time field and parse it to pull out the event time to be used in the window, and then we have the align_to time, which will be used as the start of our window. These are both arguments in the TumblingWindow module.
+We have quite a bit going on here, so let's unpack this. First, we have two functions: a builder function (build_array) used to build data, and an updater function (acc_values) used to accumulate data. These are the last two arguments in the fold_window operator. 
+
+Next, we have an get_event_time function that will take the time field and parse it to pull out the event time to be used in the window, and then we have the align_to time, which will be used as the start of our window. These are both arguments in the TumblingWindow module.
 
 The output of this step will be an accumulated array of prices that we have received over the minute.
 
@@ -305,4 +311,8 @@ This will process real-time stock price data for two tickers: AMZN and MSFT and 
 
 ## Summary
 
-That's it! You have learned how to leverage Websockets, Numpy and Bytewax for real-time data analysis. We streamed real-time stock prices from Yahoo! Finance and analyzed them in a Bytewax dataflow. We demonstrated how to connect to the Yahoo! Finance WebSocket, deserialize protobuf messages, and calculated features like the 1-minute high, low, and start and end price. While this example dataflow simply prints out the results, it could be extended to include trading logic or to write the results to another location for further analysis. We hope this guide has shown you how to extract valuable insights from real-time market data and inspired you to explore the capabilities of Python streaming with Bytewax for your own financial analysis and trading projects!
+That's it! You have learned how to leverage Websockets, Numpy and Bytewax for real-time data analysis. We streamed real-time stock prices from Yahoo! Finance and analyzed them in a Bytewax dataflow. We demonstrated how to connect to the Yahoo! Finance WebSocket, deserialize protobuf messages, and calculated features like the 1-minute high, low, and start and end price. 
+
+While this example dataflow simply prints out the results, it could be extended to include trading logic or to write the results to another location for further analysis. 
+
+We hope this guide has shown you how to extract valuable insights from real-time market data and inspired you to explore the capabilities of Python streaming with Bytewax for your own financial analysis and trading projects!
