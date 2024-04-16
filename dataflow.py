@@ -4,10 +4,14 @@ For example: ['AMZN', 'MSFT']
 
 Output: data stream (tuple) with 1-minute time window containing ticker, metadata,
 time, min, max, first price, last price and volume for each window
+
 For example:
-...
-ADD EXAMPLE HERE
-...
+('AMZN', WindowMetadata(open_time: 2024-04-16 14:20:00 UTC, close_time: 2024-04-16 14:21:00 UTC), 
+{'time': 1713277219000.0, 'min': 184.3800048828125, 'max': 184.6199951171875, 
+'first_price': 184.61000061035156, 'last_price': 184.389892578125, 'volume': 56134.0})
+('MSFT', WindowMetadata(open_time: 2024-04-16 14:20:00 UTC, close_time: 2024-04-16 14:21:00 UTC), 
+{'time': 1713277219000.0, 'min': 416.8399963378906, 'max': 417.2900085449219, 
+'first_price': 417.2900085449219, 'last_price': 416.8399963378906, 'volume': 18399.0})
 '''
 import base64
 import json
@@ -112,11 +116,24 @@ class YahooSource(FixedPartitionedSource):
 
 
 # Creating dataflow and input
-# ADD COMMENT WITH EXPECTED VALUE HERE
 flow = Dataflow("yahoofinance")
 inp = op.input(
     "input", flow, YahooSource(ticker_list)
 )
+# ('AMZN', id: "AMZN"
+# price: 184.585
+# time: 1713276945000
+# exchange: "NMS"
+# quoteType: EQUITY
+# marketHours: REGULAR_MARKET
+# changePercent: 0.52554822
+# dayVolume: 7182358
+# dayHigh: 184.59
+# dayLow: 182.26
+# change: 0.965011597
+# lastSize: 100
+# priceHint: 2
+# )
 
 def build_array():
     '''
@@ -145,8 +162,8 @@ align_to = align_to - timedelta(
     seconds=align_to.second, microseconds=align_to.microsecond
 )
 window_config = TumblingWindow(length=timedelta(seconds=60), align_to=align_to)
-# ADD COMMENT WITH EXPECTED VALUE HERE
 window = win.fold_window("1_min", inp, clock_config, window_config, build_array, acc_values)
+op.inspect("inspect", window)
 
 def calculate_features(ticker__data):
     '''
@@ -171,5 +188,7 @@ def calculate_features(ticker__data):
 features = op.map("features", window, calculate_features)
 
 # Output
-# ADD COMMENT WITH EXPECTED VALUE HERE
 op.output("out", features, StdOutSink())
+# ('MSFT', WindowMetadata(open_time: 2024-04-16 14:20:00 UTC, close_time: 2024-04-16 14:21:00 UTC),
+# {'time': 1713277219000.0, 'min': 416.8399963378906, 'max': 417.2900085449219,
+# 'first_price': 417.2900085449219, 'last_price': 416.8399963378906, 'volume': 18399.0})
