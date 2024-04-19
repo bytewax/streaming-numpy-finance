@@ -1,3 +1,5 @@
+![Real-time TESLA stock price update on Yahoo! Finance](https://github.com/davidchapuis/streaming-numpy-finance/blob/main/yahoo_thumbnail_1f1392970e.gif)
+
 # Stream Real-Time Stock Prices and Analyze Them with Numpy
 
 In this post, you'll learn how to stream real-time stock prices from Yahoo! Finance using Websockets and analyze them using Numpy. By creating a Bytewax dataflow, you'll be able to transform and react to market data in real-time, making it ideal for live data analysis.
@@ -24,7 +26,7 @@ Have you ever noticed how stock prices on Yahoo! Finance update in real-time? It
 
 In general, if you come across a publicly available website that displays something in real-time, chances are it's powered by WebSockets. We can figure this out with some quick inspection using Chrome or Mozilla developer tools.
 
-IMAGE HERE
+![Yahoo! Finance Websockets](https://github.com/davidchapuis/streaming-numpy-finance/blob/main/yahoo_1_893d79fc30.png)
 
 While inspecting the site, we'll see the WebSocket and the data being returned. It might be a little hard to decipher, but fear not! Others have done detective work for us and have already determined that it's base64 encoded and is in the protobuf format. We'll start then by writing a little function that deserializes Protobuf data so that it can be ingested into the Bytewax dataflow in a second step.
 
