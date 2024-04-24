@@ -65,13 +65,13 @@ Now that we know the WebSocket URL and have our Protobufs function, we can build
 ## Dataflow: overview
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph Input
-        direction LR
+        direction TD
         ss[Stateful Source] --> ps[Partitioning Source]
     end
     subgraph Artd[Analyze Real-Time Stock Prices]
-        direction LR
+        direction TD
         tw[Time Window] --> cf[Calculate Features]
     end
 
