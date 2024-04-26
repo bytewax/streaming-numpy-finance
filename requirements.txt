@@ -1,0 +1,7 @@
+bytewax==0.19.1
+jsonpickle==3.0.4
+numpy==1.26.4
+prometheus_client==0.20.0
+protobuf==5.26.1
+typing_extensions==4.11.0
+websockets==12.0
